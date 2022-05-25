@@ -41,7 +41,7 @@ WNDCLASS EstilizarJanela(HINSTANCE hInstance)
     window.hInstance = hInstance;
     window.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     window.hCursor = LoadCursor(NULL, IDC_ARROW);
-    window.hbrBackground = (HBRUSH) WHITE_BRUSH; //GetStockObject(WHITE_BRUSH);
+    window.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1); //(HBRUSH)(COLOR_WINDOW + 1);
     window.lpszMenuName = NULL;
     window.lpszClassName = L"Janela";
     return window;
