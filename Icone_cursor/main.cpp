@@ -4,7 +4,17 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine
 {
     MSG msg;    
 
-    WNDCLASS window = EstilizarJanela(hInstance);
+    WNDCLASS window;
+    window.style = CS_HREDRAW | CS_VREDRAW;
+    window.lpfnWndProc = WinProc;
+    window.cbClsExtra = 0;
+    window.cbWndExtra = 0;
+    window.hInstance = hInstance;
+    window.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
+    window.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_CURSOR));
+    window.hbrBackground = (HBRUSH)(COLOR_WINDOW + 4); //(HBRUSH)(COLOR_WINDOW + 1);
+    window.lpszMenuName = NULL;
+    window.lpszClassName = L"Janela";
 
     if(!RegisterClass(&window))
     {
