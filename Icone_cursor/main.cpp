@@ -1,20 +1,12 @@
-#include "headers/header.hpp" 
+#include "header.h" 
 
-INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, INT nCmdShow)
+INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, INT nCmdShow) 
 {
     MSG msg;    
 
-    WNDCLASS window;
-    window.style = CS_HREDRAW | CS_VREDRAW;
-    window.lpfnWndProc = WinProc;
-    window.cbClsExtra = 0;
-    window.cbWndExtra = 0;
-    window.hInstance = hInstance;
-    window.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
-    window.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_CURSOR));
-    window.hbrBackground = (HBRUSH)(COLOR_WINDOW + 4); //(HBRUSH)(COLOR_WINDOW + 1);
-    window.lpszMenuName = NULL;
-    window.lpszClassName = L"Janela";
+    HICON hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
+
+    WNDCLASS window = EstilizarJanela(hInstance, hIcon);
 
     if(!RegisterClass(&window))
     {
@@ -23,6 +15,20 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine
     }
 
     HWND hwnd = CriarJanela(hInstance);
+
+    RECT winRect = {0,0,1280, 720};
+    AdjustWindowRectEx(&winRect, GetWindowStyle(hwnd), GetMenu(hwnd) != NULL, GetWindowExStyle(hwnd));
+
+    MoveWindow(
+        hwnd,
+        GetSystemMetrics(SM_CXSCREEN) /2 -
+        ((winRect.right - winRect.left) /2),
+        GetSystemMetrics(SM_CYSCREEN) /2 -
+        ((winRect.bottom - winRect.top) /2),
+        winRect.right - winRect.left,
+        winRect.bottom - winRect.top,
+        TRUE
+    );
 
     ShowWindow(hwnd, nCmdShow);
 
